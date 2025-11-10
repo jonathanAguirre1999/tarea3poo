@@ -30,7 +30,7 @@ public class MenuApp extends JFrame {
 	private JTable tablaEquiposAgregados;
 	private DefaultTableModel modeloTabla;
 	private JComboBox <String> cbEtapasCampeonato;
-	private String[] etapasCampeonato = {"Octavos de final", "Cuartos de final", "Semifinales"};
+	private String[] etapasCampeonato = {"Octavos de final", "Cuartos de final", "Semifinales", "Finales"};
 	private String[] nombresColumnas= {"Nombre del equipo"};
 	private JButton btnAgregarEquipo, btnSortearPartidos;
 	private JTextArea txtContenedorResultados;
@@ -144,6 +144,30 @@ public class MenuApp extends JFrame {
 					txtNombreEquipo.setText("");
 				}
 				
+				//accion realizada en finales
+				if("Finales".equals(cbEtapasCampeonato.getSelectedItem())) {
+					
+					//mensaje de error cuando el nombre del equipo esta vacio
+					if(txtNombreEquipo.getText().trim().isEmpty()) {
+						JOptionPane.showMessageDialog(MenuApp.this, "Debe ingresar el nombre de un equipo.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
+					//creacion del equipo e ingreso de datos al sistema
+					String nombreEquipo = txtNombreEquipo.getText().trim();
+					organizador.agregarEquipo(nombreEquipo);
+					
+					//el boton de agregar se desactiva al alcanzar el limite de equipos en esta etapa
+					if(organizador.getListaEquipos().size() == 2) {
+						btnAgregarEquipo.setEnabled(false);
+					}	
+					
+					//mensaje de exito al agregar equipo
+					JOptionPane.showMessageDialog(MenuApp.this, "Equipo " + nombreEquipo + " agregado correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+					actualizarTabla(nombreEquipo);
+					txtNombreEquipo.setText("");
+				}
+				
 			}
 		});
 		btnAgregarEquipo.setBounds(237, 26, 134, 28);
@@ -220,6 +244,9 @@ public class MenuApp extends JFrame {
 					return;
 				} else if("Semifinales".equals(cbEtapasCampeonato.getSelectedItem()) && organizador.getListaEquipos().size() < 4) {
 					JOptionPane.showMessageDialog(MenuApp.this, "Esta etapa requiere 4 equipos", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				} else if("Finales".equals(cbEtapasCampeonato.getSelectedItem()) && organizador.getListaEquipos().size() < 2) {
+					JOptionPane.showMessageDialog(MenuApp.this, "Esta etapa requiere 2 equipos", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				try {
