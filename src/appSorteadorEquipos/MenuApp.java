@@ -34,6 +34,7 @@ public class MenuApp extends JFrame {
 	private String[] nombresColumnas= {"Nombre del equipo"};
 	private JButton btnAgregarEquipo, btnSortearPartidos;
 	private JTextArea txtContenedorResultados;
+	private JLabel lblResultados;
 	
 	public MenuApp() {
 		Organizador organizador = new Organizador();
@@ -205,6 +206,12 @@ public class MenuApp extends JFrame {
 		txtContenedorResultados.setBackground(new Color(175, 238, 238));
 		txtContenedorResultados.setBounds(381, 74, 355, 267);
 		panelCentralDatos.add(txtContenedorResultados);
+		
+		lblResultados = new JLabel("PARTIDOS A JUGAR EN ESTA ETAPA:");
+		lblResultados.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultados.setFont(new Font("Roboto", Font.BOLD, 14));
+		lblResultados.setBounds(381, 35, 263, 28);
+		panelCentralDatos.add(lblResultados);
 		
 		JLabel lblSelector = new JLabel("SELECCIONE LA ETAPA DEL CAMPEONATO:");
 		lblSelector.setHorizontalAlignment(SwingConstants.CENTER);
